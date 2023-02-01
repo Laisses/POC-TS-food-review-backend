@@ -1,6 +1,6 @@
 import { QueryResult } from "pg";
-import {connection} from "./database.js";
-import { Place, NewPlace, CountResult } from "./protocols.js";
+import {connection} from "./database";
+import { Place, NewPlace, CountResult } from "./protocols";
 
 export const selectPlaces = async (): Promise<QueryResult<Place>> => {
     return connection.query(`SELECT * FROM places ORDER BY id;`);

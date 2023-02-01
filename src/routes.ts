@@ -1,6 +1,6 @@
-import * as h from "./handlers.js";
-import * as m from "./middlewares.js";
-import * as s from "./schemas.js";
+import * as h from "./handlers";
+import * as m from "./middlewares";
+import * as s from "./schemas";
 import { Express } from "express";
 
 

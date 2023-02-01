@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { NewPlace, Place } from "./protocols.js";
-import * as r from "./repositories.js";
+import { NewPlace, Place } from "./protocols";
+import * as r from "./repositories";
 
 export const health = (_req: Request, res: Response) => {
     res.send("OK");

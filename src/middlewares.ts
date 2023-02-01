@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { NewPlace } from "./protocols.js";
-import { validator } from "./schemas.js"
-import * as r from "./repositories.js";
+import { NewPlace } from "./protocols";
+import { validator } from "./schemas"
+import * as r from "./repositories";
 
 export const asyncError = handlerFn => async (req: Request, res: Response, next: NextFunction) => {
     try {
