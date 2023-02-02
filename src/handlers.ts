@@ -3,7 +3,7 @@ import { NewPlace, Place } from "./protocols";
 import * as r from "./repositories";
 
 export const health = (_req: Request, res: Response) => {
-    res.send("OK");
+    res.status(200).send("OK");
 };
 
 export const getPlaces = async (_req: Request, res: Response) => {
