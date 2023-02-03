@@ -44,3 +44,21 @@ describe("GET /places", () => {
         ]);
     });
 });
+
+describe("POST /places", () => {
+    it("should respond with status 201", async () => {
+        const place = await api.post("/places").send({
+            name: "DOM",
+            category: "Restaurante"
+        });
+        expect(place.status).toBe(201);
+    });
+
+    it("should respond with status 409 if place name already exists", async() => {
+        const place = await api.post("/places").send({
+            name: "DOM",
+            category: "Restaurante"
+        });
+        expect(place.status).toBe(409);
+    });
+});
