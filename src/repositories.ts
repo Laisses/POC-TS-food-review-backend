@@ -6,6 +6,10 @@ export const selectPlaces = async (): Promise<QueryResult<Place>> => {
     return connection.query(`SELECT * FROM places ORDER BY id;`);
 };
 
+export const selectPlaceByName = async (name: string): Promise<QueryResult<Place>>=> {
+    return connection.query(`SELECT * FROM places WHERE name=$1;`, [name]);
+}
+
 export const insertPlace = async ({name, category}: NewPlace) => {
     return connection.query(`INSERT INTO places (name, category) VALUES ($1, $2);`, [name, category]);
 };

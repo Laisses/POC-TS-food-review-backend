@@ -13,6 +13,12 @@ export const getPlaces = async (_req: Request, res: Response) => {
 
 export const addPlace = async (req: Request, res: Response) => {
     const newPlace = req.body as NewPlace;
+    const place = await r.selectPlaceByName(newPlace.name);
+
+    if(place.rows[0]) {
+        return res.sendStatus(409);
+    }
+
     await r.insertPlace(newPlace);
     return res.sendStatus(201);
 };
@@ -21,6 +27,12 @@ export const editPlace = async (req: Request, res: Response) => {
     const { id } = req.params;
     const changes = req.body as NewPlace;
     const newPlace: Place = { id: Number(id), ...changes };
+
+    const place = await r.selectPlaceById(Number(id));
+
+    if(!place.rows[0]) {
+        res.sendStatus(404);
+    }
 
     await r.updatePlace(newPlace);
 
@@ -31,6 +43,12 @@ export const editRating = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { rating } = req.body as { rating: string };
 
+    const place = await r.selectPlaceById(Number(id));
+
+    if(!place.rows[0]) {
+        res.sendStatus(404);
+    }
+
     await r.updateRatings(Number(id), rating);
 
     return res.sendStatus(200);
@@ -38,6 +56,12 @@ export const editRating = async (req: Request, res: Response) => {
 
 export const removePlace = async (req: Request, res: Response) => {
     const {id} = req.params;
+
+    const place = await r.selectPlaceById(Number(id));
+
+    if(!place.rows[0]) {
+        res.sendStatus(404);
+    }
 
     await r.deletePlace(Number(id));
 
