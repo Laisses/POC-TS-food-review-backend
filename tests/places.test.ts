@@ -64,7 +64,7 @@ describe("POST /places", () => {
 });
 
 describe("PUT /places/:id", () => {
-    it("should return with status 200", async () => {
+    it("should respond with status 200", async () => {
         const places = await api.get("/places");
 
         const response = await api.put(`/places/${places.body[0].id}`).send({
@@ -74,4 +74,15 @@ describe("PUT /places/:id", () => {
 
         expect(response.status).toBe(200);
     });
+
+    it("should respond with status 404 if id can't be found", async () => {
+        const response = await api.put(`/places/0`).send({
+            name: "Ticiana Werner",
+            category: "Restaurante",
+        });
+
+        expect(response.status).toBe(404);
+    });
 });
+
+
