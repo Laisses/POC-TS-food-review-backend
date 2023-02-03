@@ -105,4 +105,17 @@ describe("PATCH /places/:id", () => {
     });
 });
 
+describe("DELETE /places/:id", () => {
+    it("should respond with status 200", async () => {
+        const places = await api.get("/places");
+        const response = await api.delete(`/places/${places.body[0].id}`);
 
+        expect(response.status).toBe(200);
+    });
+
+    it("should respond with status 404 id the place id can't be found", async () => {
+        const response = await api.delete(`/places/0`);
+
+        expect(response.status).toBe(404);
+    });
+});
