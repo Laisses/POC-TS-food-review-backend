@@ -29,7 +29,7 @@ describe("GET /places", () => {
     });
 
     it("should respond with status 200 and an array of places", async () => {
-        const restaurante = {name: "Beirute", category: "Restaurante"};
+        const restaurante = { name: "Beirute", category: "Restaurante" };
         await f.insertPlace(restaurante);
 
         const places = await api.get("/places");
@@ -54,7 +54,7 @@ describe("POST /places", () => {
         expect(place.status).toBe(201);
     });
 
-    it("should respond with status 409 if place name already exists", async() => {
+    it("should respond with status 409 if place name already exists", async () => {
         const place = await api.post("/places").send({
             name: "DOM",
             category: "Restaurante"
@@ -117,5 +117,17 @@ describe("DELETE /places/:id", () => {
         const response = await api.delete(`/places/0`);
 
         expect(response.status).toBe(404);
+    });
+});
+
+describe("GET /analytics", () => {
+    it("should respond with status 200 and an object containing the counts", async () => {
+        const analytics = await api.get("/analytics");
+
+        expect(analytics.status).toBe(200);
+        expect(analytics.body).toMatchObject({
+            places: expect.any(Number),
+            reviews: expect.any(Number),
+        });
     });
 });
