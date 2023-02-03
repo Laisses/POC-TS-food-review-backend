@@ -73,7 +73,7 @@ export const listReviews = async (_req: Request, res: Response) => {
     const allReviews = await r.countReviews();
 
     return res.status(200).send({
-        places: allPlaces.rows[0].count,
-        reviews: allReviews.rows[0].count,
+        places: Number(allPlaces.rows[0].count),
+        reviews: Number(allReviews.rows[0].count),
     });
 };
