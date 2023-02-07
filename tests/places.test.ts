@@ -29,8 +29,7 @@ describe("GET /places", () => {
     });
 
     it("should respond with status 200 and an array of places", async () => {
-        const restaurante = { name: "Beirute", category: "Restaurante" };
-        await f.insertPlace(restaurante);
+        await f.insertPlace();
 
         const places = await api.get("/places");
 
