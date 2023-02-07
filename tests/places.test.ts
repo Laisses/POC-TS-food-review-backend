@@ -71,11 +71,12 @@ describe("POST /places", () => {
 describe("PUT /places/:id", () => {
     it("should respond with status 200", async () => {
         const places = await api.get("/places");
+        const editedPlace = {
+            name: faker.company.name(),
+            category: faker.helpers.arrayElement(["restaurante", "bar", "pub", "café"]),
+        };
 
-        const response = await api.put(`/places/${places.body[0].id}`).send({
-            name: "Ticiana Werner",
-            category: "Restaurante",
-        });
+        const response = await api.put(`/places/${places.body[0].id}`).send(editedPlace);
 
         expect(response.status).toBe(200);
     });
@@ -93,18 +94,16 @@ describe("PUT /places/:id", () => {
 describe("PATCH /places/:id", () => {
     it("should respond with status 200", async () => {
         const places = await api.get("/places");
+        const rating = faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"]);
 
-        const response = await api.patch(`/places/${places.body[0].id}`).send({
-            rating: "good",
-        });
+        const response = await api.patch(`/places/${places.body[0].id}`).send(rating);
 
         expect(response.status).toBe(200);
     });
 
     it("should respond with status 404 id the place id can't be found", async () => {
-        const response = await api.patch(`/places/0`).send({
-            rating: "good",
-        });
+        const rating = faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"]);
+        const response = await api.patch(`/places/0`).send(rating);
 
         expect(response.status).toBe(404);
     });
