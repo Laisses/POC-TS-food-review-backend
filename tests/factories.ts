@@ -7,10 +7,6 @@ export const fakerPlace: NewPlace = {
     category: faker.helpers.arrayElement(["restaurante", "bar", "pub", "café"]),
 };
 
-export const fakerRatings = {
-    rating: faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"]),
-};
-
 export const insertPlace = async () => {
     return connection.query(`INSERT INTO places (name, category) VALUES ($1, $2);`, [fakerPlace.name, fakerPlace.category]);
 };
