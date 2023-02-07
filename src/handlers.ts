@@ -28,12 +28,6 @@ export const editPlace = async (req: Request, res: Response) => {
     const changes = req.body as NewPlace;
     const newPlace: Place = { id: Number(id), ...changes };
 
-    const place = await r.selectPlaceById(Number(id));
-
-    if(!place.rows[0]) {
-        res.sendStatus(404);
-    }
-
     await r.updatePlace(newPlace);
 
     return res.sendStatus(200);
@@ -43,12 +37,6 @@ export const editRating = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { rating } = req.body as { rating: string };
 
-    const place = await r.selectPlaceById(Number(id));
-
-    if(!place.rows[0]) {
-        res.sendStatus(404);
-    }
-
     await r.updateRatings(Number(id), rating);
 
     return res.sendStatus(200);
@@ -56,12 +44,6 @@ export const editRating = async (req: Request, res: Response) => {
 
 export const removePlace = async (req: Request, res: Response) => {
     const {id} = req.params;
-
-    const place = await r.selectPlaceById(Number(id));
-
-    if(!place.rows[0]) {
-        res.sendStatus(404);
-    }
 
     await r.deletePlace(Number(id));
 
