@@ -1,6 +1,7 @@
 import { app } from "server";
 import supertest from "supertest";
 import { connection } from "database";
+import { faker } from '@faker-js/faker';
 import * as f from "./factories";
 
 const api = supertest(app);
@@ -9,9 +10,9 @@ beforeAll(async () => {
     await connection.query(`DELETE FROM places;`);
 });
 
-afterAll(async () => {
+/* afterAll(async () => {
     await connection.query(`DELETE FROM places;`);
-});
+}); */
 
 describe("GET /health", () => {
     it("should respond with status 200 and 'OK'", async () => {
@@ -46,19 +47,24 @@ describe("GET /places", () => {
 
 describe("POST /places", () => {
     it("should respond with status 201", async () => {
-        const place = await api.post("/places").send({
-            name: "DOM",
-            category: "Restaurante"
-        });
-        expect(place.status).toBe(201);
+        const newPlace = {
+            name: faker.company.name(),
+            category: faker.helpers.arrayElement(["restaurante", "bar", "pub", "café"]),
+        };
+
+        const response = await api.post("/places").send(newPlace);
+        expect(response.status).toBe(201);
     });
 
     it("should respond with status 409 if place name already exists", async () => {
-        const place = await api.post("/places").send({
-            name: "DOM",
-            category: "Restaurante"
+        const places = await api.get("/places");
+        const place = places.body[0];
+
+        const response = await api.post("/places").send({
+            name: place.name,
+            category: place.category,
         });
-        expect(place.status).toBe(409);
+        expect(response.status).toBe(409);
     });
 });
 
