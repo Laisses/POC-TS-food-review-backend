@@ -6,7 +6,8 @@
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "jest"
+    "test": "dotenv -e .env.test jest -- --forceExit",
+    "coverage": "dotenv -e .env.test jest -- --coverage --forceExit"
   },
   "repository": {
     "type": "git",
