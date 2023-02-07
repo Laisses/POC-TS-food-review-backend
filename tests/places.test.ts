@@ -94,7 +94,9 @@ describe("PUT /places/:id", () => {
 describe("PATCH /places/:id", () => {
     it("should respond with status 200", async () => {
         const places = await api.get("/places");
-        const rating = faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"]);
+        const rating = {
+            rating: faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"])
+        };
 
         const response = await api.patch(`/places/${places.body[0].id}`).send(rating);
 
@@ -102,7 +104,9 @@ describe("PATCH /places/:id", () => {
     });
 
     it("should respond with status 404 id the place id can't be found", async () => {
-        const rating = faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"]);
+        const rating = {
+            rating: faker.helpers.arrayElement(["terrible", "bad", "ok", "good", "great"])
+        };
         const response = await api.patch(`/places/0`).send(rating);
 
         expect(response.status).toBe(404);
